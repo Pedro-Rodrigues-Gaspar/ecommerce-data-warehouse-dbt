@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: fact_orders
+    description: "Table des commandes"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+
+  - name: fact_order_items
+    description: "Table des items de commande"
+    columns:
+      - name: order_item_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: seller_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_sellers')
+              field: seller_id
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+
+  - name: dim_customers
+    description: "Table des clients"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_products
+    description: "Table des produits"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_sellers
+    description: "Table des vendeurs"
+    columns:
+      - name: seller_id
+        tests:
+          - not_null
+          - unique
