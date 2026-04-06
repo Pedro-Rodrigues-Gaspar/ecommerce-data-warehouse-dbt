@@ -66,6 +66,48 @@ dbt docs serve
 - Les fichiers sensibles (ex: `.env`) sont ignores.
 - Les artefacts dbt (`target/`, `logs/`, `dbt_packages/`) sont ignores.
 
+## Connexion Power BI au Data Warehouse (BigQuery)
+
+Le projet dbt alimente BigQuery sur :
+
+- `project_id`: `analytics-ecommerce-project`
+- `dataset`: `ecommerce_analytics`
+- tables principales: `fact_orders`, `fact_order_items`, `dim_customers`, `dim_products`, `dim_sellers`
+
+### 1) Connecter Power BI Desktop
+
+1. Ouvrir **Power BI Desktop**.
+2. Aller dans **Obtenir des donnees** -> **Google BigQuery**.
+3. Se connecter avec ton compte Google ayant acces au projet BigQuery.
+4. Dans le navigateur BigQuery, selectionner le dataset `ecommerce_analytics`.
+5. Charger les tables du star schema :
+   - `fact_orders`
+   - `fact_order_items`
+   - `dim_customers`
+   - `dim_products`
+   - `dim_sellers`
+
+### 2) Configurer le modele dans Power BI
+
+- Creer les relations 1-* depuis dimensions vers facts :
+  - `dim_customers.customer_id` -> `fact_orders.customer_id`
+  - `dim_customers.customer_id` -> `fact_order_items.customer_id`
+  - `dim_products.product_id` -> `fact_order_items.product_id`
+  - `dim_sellers.seller_id` -> `fact_order_items.seller_id`
+  - `fact_orders.order_id` -> `fact_order_items.order_id`
+- Marquer les dimensions en tables de reference pour garder un modele en etoile lisible.
+
+### 3) Publier et rafraichir dans Power BI Service
+
+1. Publier le rapport vers un workspace.
+2. Dans **Settings -> Dataset -> Data source credentials**, reconnecter BigQuery.
+3. Configurer un **Scheduled refresh** (ex: quotidien).
+
+### 4) Workflow recommande
+
+- Executer `dbt run` et `dbt test` avant chaque refresh BI important.
+- Utiliser les tables **marts** comme source unique du rapport ; les mesures et maquettes detaillees restent dans l’outil BI (hors repo).
+
 ## Auteur
 
 Pedro Rodrigues Gaspar

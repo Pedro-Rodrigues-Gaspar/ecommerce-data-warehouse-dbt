@@ -2,3 +2,6 @@ logs/
 *.log
 *.json
 .env
+
+# Notes locales (non versionnees) — ex. brouillons Power BI / DAX
+powerbi-notes.txt
