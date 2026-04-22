@@ -25,6 +25,7 @@ Le code dbt se trouve dans le dossier `ecommerce_project_ae/` :
   - `dim_customers`
   - `dim_products`
   - `dim_sellers`
+  - `dim_date`
 
 ## Data model (high level)
 
@@ -35,6 +36,7 @@ Le code dbt se trouve dans le dossier `ecommerce_project_ae/` :
   - `dim_customers` : informations clients
   - `dim_products` : informations produits et categorie
   - `dim_sellers` : informations vendeurs
+  - `dim_date` : calendrier analytique (jour, semaine, mois, trimestre, annee)
 
 ## Tests de qualite
 
@@ -72,7 +74,7 @@ Le projet dbt alimente BigQuery sur :
 
 - `project_id`: `analytics-ecommerce-project`
 - `dataset`: `ecommerce_analytics`
-- tables principales: `fact_orders`, `fact_order_items`, `dim_customers`, `dim_products`, `dim_sellers`
+- tables principales: `fact_orders`, `fact_order_items`, `dim_customers`, `dim_products`, `dim_sellers`, `dim_date`
 
 ### 1) Connecter Power BI Desktop
 
@@ -86,10 +88,13 @@ Le projet dbt alimente BigQuery sur :
    - `dim_customers`
    - `dim_products`
    - `dim_sellers`
+   - `dim_date`
 
 ### 2) Configurer le modele dans Power BI
 
 - Creer les relations 1-* depuis dimensions vers facts :
+  - `dim_date.date_day` -> `fact_orders.order_date`
+  - `dim_date.date_day` -> `fact_order_items.order_date`
   - `dim_customers.customer_id` -> `fact_orders.customer_id`
   - `dim_customers.customer_id` -> `fact_order_items.customer_id`
   - `dim_products.product_id` -> `fact_order_items.product_id`

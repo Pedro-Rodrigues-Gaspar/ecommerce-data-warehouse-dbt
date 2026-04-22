@@ -64,3 +64,11 @@ models:
         tests:
           - not_null
           - unique
+
+  - name: dim_date
+    description: "Table des dates"
+    columns:
+      - name: date_day
+        tests:
+          - not_null
+          - unique
