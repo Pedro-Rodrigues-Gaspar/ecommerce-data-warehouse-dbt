@@ -3,6 +3,7 @@
 select
   order_id,
   customer_id,
+  customer_unique_id,
   order_date,
   date(order_approved_datetime) as order_approved_date,
   shipped_date,

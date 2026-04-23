@@ -3,6 +3,7 @@
 select 
   o.order_id,
   o.customer_id,
+  c.customer_unique_id,
   o.order_status,
   o.order_date,
   c.city as customer_city,
@@ -16,9 +17,9 @@ select
   coalesce(sum(oi.item_gross_amount), 0) as order_gross_amount,
   count(oi.order_item_id) as nb_product_items,
   count(distinct oi.seller_id) as nb_sellers
-from `ecommerce_analytics.stg_orders` as o
-left join `ecommerce_analytics.int_order_items_enriched` as oi
+from {{ source('ecommerce_analytics', 'stg_orders') }} as o
+left join {{ ref('int_order_items_enriched') }} as oi
   on o.order_id = oi.order_id
-left join `ecommerce_analytics.stg_customers` as c
+left join {{ source('ecommerce_analytics', 'stg_customers') }} as c
   on o.customer_id = c.customer_id
-group by 1,2,3,4,5,6,7,8,9,10
+group by 1,2,3,4,5,6,7,8,9,10,11

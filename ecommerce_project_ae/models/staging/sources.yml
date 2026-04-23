@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: ecommerce_analytics
+    database: analytics-ecommerce-project
+    schema: ecommerce_analytics
+    tables:
+      - name: stg_orders
+      - name: stg_order_items
+      - name: stg_customers
+      - name: stg_products
+      - name: stg_product_category_name
+      - name: stg_sellers
