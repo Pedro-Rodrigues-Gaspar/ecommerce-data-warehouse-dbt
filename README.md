@@ -181,15 +181,15 @@ Objectif : faciliter la lecture et la prise de décision
 
 ### Overview
 
-![Overview](docs/dashboard-overview.png)
+![Overview](ecommerce_project_ae/docs/dashboard-overview.png)
 
 ### Sales / Products
 
-![Sales](docs/dashboard-sales-products.png)
+![Sales](ecommerce_project_ae/docs/dashboard-sales-products.png)
 
 ### Customers
 
-![Customers](docs/dashboard-customers.png)
+![Customers](ecommerce_project_ae/docs/dashboard-customers.png)
 
 ## Modélisation BI & DAX
 - Création de mesures :
