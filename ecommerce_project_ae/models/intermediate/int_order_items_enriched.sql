@@ -15,12 +15,12 @@ select
     o.order_status,
     s.seller_city,
     s.seller_state
-from `ecommerce_analytics.stg_order_items` oi
-left join `ecommerce_analytics.stg_orders` o
+from {{ source('ecommerce_analytics', 'stg_order_items') }} oi
+left join {{ source('ecommerce_analytics', 'stg_orders') }} o
     on oi.order_id = o.order_id
-left join `ecommerce_analytics.stg_products` p
+left join {{ source('ecommerce_analytics', 'stg_products') }} p
     on oi.product_id = p.product_id
-left join `ecommerce_analytics.stg_product_category_name` pc
+left join {{ source('ecommerce_analytics', 'stg_product_category_name') }} pc
     on p.product_category_name = pc.product_category_name
-left join `ecommerce_analytics.stg_sellers` s
+left join {{ source('ecommerce_analytics', 'stg_sellers') }} s
     on oi.seller_id = s.seller_id

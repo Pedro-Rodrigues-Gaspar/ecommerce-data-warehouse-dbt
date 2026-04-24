@@ -180,13 +180,13 @@ Objectif : faciliter la lecture et la prise de décision
 ## Aperçu du dashboard
 
 ### Overview
-![Overview](docs/dashboard-overview.png)
+docs/dashboard-overview.png
 
 ### Sales / Products
-![Sales](docs/dashboard-sales-products.png)
+docs/dashboard-sales-products.png
 
 ### Customers
-![Customers](docs/dashboard-customers.png)
+docs/dashboard-customers.png
 
 ## Modélisation BI & DAX
 - Création de mesures :
