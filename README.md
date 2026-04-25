@@ -40,6 +40,9 @@ Comment se répartit l’activité géographiquement ?
 
 ## Architecture du projet
 
+### Schéma d'architecture
+![Data Architecture](ecommerce_project_ae/docs/data_architecture.png)
+
 Le projet dbt est structuré en 3 couches :
 
 models/
@@ -83,6 +86,8 @@ Le modèle suit une logique de star schema :
   - `dim_products` : informations produits et catégorie
   - `dim_sellers` : informations vendeurs
   - `dim_date` : calendrier analytique (jour, semaine, mois, trimestre, année)
+
+![data_model_lineage](ecommerce_project_ae/docs/dbt_data_modeling_and_lineage.png)
 
 Ce modèle permet :
 - une lecture simple côté BI
@@ -180,15 +185,12 @@ Objectif : faciliter la lecture et la prise de décision
 ## Aperçu du dashboard
 
 ### Overview
-
 ![Overview](ecommerce_project_ae/docs/dashboard-overview.png)
 
 ### Sales / Products
-
 ![Sales](ecommerce_project_ae/docs/dashboard-sales-products.png)
 
 ### Customers
-
 ![Customers](ecommerce_project_ae/docs/dashboard-customers.png)
 
 ## Modélisation BI & DAX
@@ -211,46 +213,6 @@ Les calculs métiers sont volontairement séparés :
 
 - Les fichiers sensibles (ex. `.env`) sont ignorés.
 - Les artefacts dbt (`target/`, `logs/`, `dbt_packages/`) sont ignorés.
-
-## Connexion Power BI au data warehouse (BigQuery)
-
-Le projet dbt alimente BigQuery sur :
-
-- `project_id` : `analytics-ecommerce-project`
-- `dataset` : `ecommerce_analytics`
-- tables principales : `fact_orders`, `fact_order_items`, `dim_customers`, `dim_products`, `dim_sellers`, `dim_date`
-
-### 1) Connecter Power BI Desktop
-
-1. Ouvrir **Power BI Desktop**.
-2. Aller dans **Obtenir des données** → **Google BigQuery**.
-3. Se connecter avec un compte Google ayant accès au projet BigQuery.
-4. Dans le navigateur BigQuery, sélectionner le dataset `ecommerce_analytics`.
-5. Charger les tables du schéma en étoile :
-   - `fact_orders`
-   - `fact_order_items`
-   - `dim_customers`
-   - `dim_products`
-   - `dim_sellers`
-   - `dim_date`
-
-### 2) Configurer le modèle dans Power BI
-
-- Créer les relations 1-* depuis les dimensions vers les faits :
-  - `dim_date.date_day` → `fact_orders.order_date`
-  - `dim_date.date_day` → `fact_order_items.order_date`
-  - `dim_customers.customer_id` → `fact_orders.customer_id`
-  - `dim_customers.customer_id` → `fact_order_items.customer_id`
-  - `dim_products.product_id` → `fact_order_items.product_id`
-  - `dim_sellers.seller_id` → `fact_order_items.seller_id`
-  - `fact_orders.order_id` → `fact_order_items.order_id`
-- Marquer les dimensions comme tables de référence pour garder un modèle en étoile lisible.
-
-### 3) Publier et rafraîchir dans Power BI Service
-
-1. Publier le rapport vers un workspace.
-2. Dans **Settings → Dataset → Data source credentials**, reconnecter BigQuery.
-3. Configurer un **Scheduled refresh** (ex. quotidien).
 
 ## Workflow
 
